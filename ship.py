@@ -4,6 +4,7 @@ import pygame
 class Ship:
     """A class to manage the ship."""
 
+    # two parameters: the self reference and a reference to the current instance of the AlienInvasion class
     def __init__(self, ai_game):
         """Initialize the ship and set its starting position."""
         self.screen = ai_game.screen
@@ -14,7 +15,7 @@ class Ship:
         self.rect = self.image.get_rect()
 
         # Start each new ship at the bottom center of the screen.
-        # the default place of the image is the top left corner
+        # the default place of the image is at the top left corner
         self.rect.midbottom = self.screen_rect.midbottom
 
     def blitme(self):
