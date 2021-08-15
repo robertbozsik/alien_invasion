@@ -1,5 +1,7 @@
 import sys
 import pygame
+from settings import Settings
+from ship import Ship
 
 
 class AlienInvasion:
@@ -9,15 +11,20 @@ class AlienInvasion:
         """Initialize the game, and create game resources."""
         # Initialize the background settings that Pygame needs to work properly.
         pygame.init()
+        self.settings = Settings()
 
         # Available in all methods in the class
-        self.screen = pygame.display.set_mode((1280, 800))
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
 
         # Set the title of the Pygame window (default: "pygame window")
         pygame.display.set_caption("Alien Invasion")
 
+        # initialize the ship object
+        self.ship = Ship(self)
+
         # Set the background color
-        self.bg_color = (230, 230, 230)
+        self.bg_color = self.settings.bg_color
 
     def run_game(self):
         """Start the main loop for the game."""
@@ -32,6 +39,7 @@ class AlienInvasion:
             # fill the screen with the background color
             # this will redraw the screen during each pass through the loop
             self.screen.fill(self.bg_color)
+            self.ship.blitme()
 
             # Make the most recently drawn screen visible.
             pygame.display.flip()
