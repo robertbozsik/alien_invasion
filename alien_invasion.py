@@ -13,7 +13,7 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        # Available in all methods in the class
+        # create the screen
         self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
 
@@ -24,28 +24,32 @@ class AlienInvasion:
         # the self argument here refers to the current instance of AlienInvasion
         self.ship = Ship(self)
 
-        # Set the background color
-        self.bg_color = self.settings.bg_color
+    # a helper method does work inside a class but isn't meant to be called through an instance
+    def _check_events(self):
+        """Respond to keypresses and mouse events."""
+        for event in pygame.event.get():
+            # when the player clicks the game window's close button
+            if event.type == pygame.QUIT:
+                # exit the game
+                sys.exit()
+
+    # a single leading underscore indicates a helper method
+    def _update_screen(self):
+        """Update images on the screen, and flip to the new screen."""
+        # fill the screen with the background color
+        self.screen.fill(self.settings.bg_color)
+
+        # draw the ship on the screen
+        self.ship.blitme()
+
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
 
     def run_game(self):
         """Start the main loop for the game."""
         while True:
-            # Whatch for keyboard and mouse events.
-            for event in pygame.event.get():
-                # when the player clicks the game window's close button
-                if event.type == pygame.QUIT:
-                    # exit the game
-                    sys.exit()
-
-            # fill the screen with the background color
-            # this will redraw the screen during each pass through the loop
-            self.screen.fill(self.bg_color)
-
-            # draw the ship on the screen
-            self.ship.blitme()
-
-            # Make the most recently drawn screen visible.
-            pygame.display.flip()
+            self._check_events()
+            self._update_screen()
 
 
 if __name__ == "__main__":
