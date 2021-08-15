@@ -32,6 +32,16 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 # exit the game
                 sys.exit()
+            # each keypress is registered as a KEYDOWN event
+            elif event.type == pygame.KEYDOWN:
+                # if the key pressed is the right arrow key
+                if event.key == pygame.K_RIGHT:
+                    # Move the ship one pixel to the right
+                    # self.ship.rect.x += 1
+                    self.ship.moving_right = True
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ship.moving_right = False
 
     # a single leading underscore indicates a helper method
     def _update_screen(self):
@@ -49,6 +59,7 @@ class AlienInvasion:
         """Start the main loop for the game."""
         while True:
             self._check_events()
+            self.ship.update()
             self._update_screen()
 
 
