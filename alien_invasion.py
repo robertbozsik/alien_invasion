@@ -21,6 +21,9 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
 
         # initialize the ship object
+        # self.ship_image = pygame.image.load("./images/ship.bmp")
+        # self.ship_rect = self.ship_image.get_rect()
+        # self.ship_rect.midbottom = self.screen.get_rect().midbottom
         self.ship = Ship(self)
 
         # Set the background color
@@ -39,6 +42,9 @@ class AlienInvasion:
             # fill the screen with the background color
             # this will redraw the screen during each pass through the loop
             self.screen.fill(self.bg_color)
+
+            # draw the ship on the screen
+            # self.screen.blit(self.ship_image, self.ship_rect)
             self.ship.blitme()
 
             # Make the most recently drawn screen visible.
