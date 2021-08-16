@@ -26,9 +26,15 @@ class AlienInvasion:
         # initialize the ship object
         # the self argument here refers to the current instance of AlienInvasion
         self.ship = Ship(self)
-        self.bullet = Bullet(self)
+        self.bullets = pygame.sprite.Group()
 
     # helper methods
+    def _fire_bullet(self):
+        """Create a new bullet and add it to the bullets group."""
+        new_bullet = Bullet(self)
+        # add() is a method written specifically for Pygame groups
+        self.bullets.add(new_bullet)
+
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
         # if the key pressed is the right arrow key
@@ -39,6 +45,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
@@ -74,7 +82,8 @@ class AlienInvasion:
 
         # draw the ship on the screen
         self.ship.blitme()
-        self.bullet.draw_bullet()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()
@@ -84,7 +93,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullet.update()
+            self.bullets.update()
             self._update_screen()
 
 

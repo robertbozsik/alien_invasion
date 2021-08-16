@@ -13,7 +13,6 @@ class Bullet(Sprite):
         super().__init__()
 
         self.screen = ai_game.screen
-        # self.screen_rect = ai_game.screen.get_rect()
         self.settings = ai_game.settings
         self.color = self.settings.bullet_color
 
