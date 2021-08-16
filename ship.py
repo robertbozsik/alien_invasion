@@ -7,8 +7,11 @@ class Ship:
     # two parameters: the self reference and a reference to the current instance of the AlienInvasion class
     def __init__(self, ai_game):
         """Initialize the ship and set its starting position."""
+        # set the screen and screen_rect (rectangle) equal to the game screen.
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
+
+        # set the setting equal to the game settings
         self.settings = ai_game.settings
 
         # Load the ship image and get its rect.
@@ -16,7 +19,6 @@ class Ship:
         self.image_rect = self.image.get_rect()
 
         # Start each new ship at the bottom center of the screen.
-        # the default place of the image is at the top left corner
         self.image_rect.midbottom = self.screen_rect.midbottom
 
         # Store a decimal value for the ship's horizontal position

@@ -13,9 +13,10 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        # create the screen
-        self.screen = pygame.display.set_mode(
-            (self.settings.screen_width, self.settings.screen_height))
+        # create the screen as fullscreen
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
 
         # Set the title of the Pygame window (default: "pygame window")
         pygame.display.set_caption("Alien Invasion")
@@ -33,6 +34,8 @@ class AlienInvasion:
         # if the key pressed is the left arrow key
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
 
     def _check_keyup_events(self, event):
         """Respond to key releases."""
