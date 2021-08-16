@@ -93,19 +93,23 @@ class AlienInvasion:
         # Make the most recently drawn screen visible.
         pygame.display.flip()
 
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets."""
+        # Update bullet positions
+        self.bullets.update()
+
+        # Get rid of bullets that have disappeared
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:  # 0 is same as self.screen.get_rect().top
+                self.bullets.remove(bullet)
+        # print(len(self.bullets))
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
-
-            # Get rid of bullets that have disappeared
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:  # 0 is same as self.screen.get_rect().top
-                    self.bullets.remove(bullet)
-            # print(len(self.bullets))
-
+            self._update_bullets()
             self._update_screen()
 
 
