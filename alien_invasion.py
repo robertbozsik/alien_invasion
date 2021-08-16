@@ -14,11 +14,15 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
 
-        # create the screen as fullscreen
-        flags = pygame.DOUBLEBUF | pygame.HWSURFACE | pygame.FULLSCREEN
-        self.screen = pygame.display.set_mode((0, 0), flags)
-        self.settings.screen_width = self.screen.get_rect().width
-        self.settings.screen_height = self.screen.get_rect().height
+        # create the screen
+        self.screen = pygame.display.set_mode(
+            (self.settings.screen_width, self.settings.screen_height))
+
+        # set the screen fullscreen
+        # self.fullscreen = pygame.FULLSCREEN
+        # self.screen = pygame.display.set_mode((0, 0), self.fullscreen)
+        # self.settings.screen_width = self.screen.get_rect().width
+        # self.settings.screen_height = self.screen.get_rect().height
 
         # Set the title of the Pygame window (default: "pygame window")
         pygame.display.set_caption("Alien Invasion")
@@ -31,9 +35,10 @@ class AlienInvasion:
     # helper methods
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
-        new_bullet = Bullet(self)
-        # add() is a method written specifically for Pygame groups
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            # add() is a method written specifically for Pygame groups
+            self.bullets.add(new_bullet)
 
     def _check_keydown_events(self, event):
         """Respond to keypresses."""
@@ -94,6 +99,13 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+
+            # Get rid of bullets that have disappeared
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:  # 0 is same as self.screen.get_rect().top
+                    self.bullets.remove(bullet)
+            # print(len(self.bullets))
+
             self._update_screen()
 
 
