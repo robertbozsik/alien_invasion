@@ -9,6 +9,7 @@ class Ship:
         """Initialize the ship and set its starting position."""
         self.screen = ai_game.screen
         self.screen_rect = ai_game.screen.get_rect()
+        self.settings = ai_game.settings
 
         # Load the ship image and get its rect.
         self.image = pygame.image.load("./images/ship.bmp")
@@ -18,17 +19,24 @@ class Ship:
         # the default place of the image is at the top left corner
         self.image_rect.midbottom = self.screen_rect.midbottom
 
+        # Store a decimal value for the ship's horizontal position
+        self.x = float(self.image_rect.x)
+
         # Movement flags
         self.moving_right = False
         self.moving_left = False
 
     def update(self):
         """Update the ships position based on the movement flags."""
+        # Update the ship's x value, not the image_rect
         if self.moving_right:
-            self.image_rect.x += 1
+            self.x += self.settings.ship_speed
         # if we used "elif" for motion to the left, the right arrow key would always have priority
         if self.moving_left:
-            self.image_rect.x -= 1
+            self.x -= self.settings.ship_speed
+
+        # Update image_rect object from self.x
+        self.image_rect.x = self.x
 
     def blitme(self):
         """Draw the ship at its current location."""
