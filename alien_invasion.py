@@ -24,6 +24,25 @@ class AlienInvasion:
         # the self argument here refers to the current instance of AlienInvasion
         self.ship = Ship(self)
 
+    # helper methods
+    def _check_keydown_events(self, event):
+        """Respond to keypresses."""
+        # if the key pressed is the right arrow key
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        # if the key pressed is the left arrow key
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+
+    def _check_keyup_events(self, event):
+        """Respond to key releases."""
+        # if the key released is the right arrow key
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        # if the key released is the left arrow key
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+
     # a helper method does work inside a class but isn't meant to be called through an instance
     def _check_events(self):
         """Respond to keypresses and mouse events."""
@@ -35,21 +54,11 @@ class AlienInvasion:
 
             # each keypress is registered as a KEYDOWN event
             elif event.type == pygame.KEYDOWN:
-                # if the key pressed is the right arrow key
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = True
-                # if the key pressed is the left arrow key
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
+                self._check_keydown_events(event)
 
             # each key release is registered as a KEYUP event
             elif event.type == pygame.KEYUP:
-                # if the key released is the right arrow key
-                if event.key == pygame.K_RIGHT:
-                    self.ship.moving_right = False
-                # if the key released is the left arrow key
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False
+                self._check_keyup_events(event)
 
     # a single leading underscore indicates a helper method
     def _update_screen(self):
