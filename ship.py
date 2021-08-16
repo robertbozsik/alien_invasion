@@ -29,10 +29,11 @@ class Ship:
     def update(self):
         """Update the ships position based on the movement flags."""
         # Update the ship's x value, not the image_rect
-        if self.moving_right:
+        if self.moving_right and self.image_rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
         # if we used "elif" for motion to the left, the right arrow key would always have priority
-        if self.moving_left:
+        # self.screen_rect.left is also equal to the 0th horizonlat pixel:
+        if self.moving_left and self.image_rect.left > self.screen_rect.left:
             self.x -= self.settings.ship_speed
 
         # Update image_rect object from self.x
