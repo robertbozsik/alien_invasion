@@ -2,6 +2,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 
 class AlienInvasion:
@@ -14,7 +15,8 @@ class AlienInvasion:
         self.settings = Settings()
 
         # create the screen as fullscreen
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        flags = pygame.DOUBLEBUF | pygame.HWSURFACE | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((0, 0), flags)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
 
@@ -24,6 +26,7 @@ class AlienInvasion:
         # initialize the ship object
         # the self argument here refers to the current instance of AlienInvasion
         self.ship = Ship(self)
+        self.bullet = Bullet(self)
 
     # helper methods
     def _check_keydown_events(self, event):
@@ -71,6 +74,7 @@ class AlienInvasion:
 
         # draw the ship on the screen
         self.ship.blitme()
+        self.bullet.draw_bullet()
 
         # Make the most recently drawn screen visible.
         pygame.display.flip()
@@ -80,6 +84,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullet.update()
             self._update_screen()
 
 
