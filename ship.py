@@ -16,31 +16,32 @@ class Ship:
 
         # Load the ship image and get its rect.
         self.image = pygame.image.load("./images/ship.bmp")
-        self.image_rect = self.image.get_rect()
+        self.rect = self.image.get_rect()
 
         # Start each new ship at the bottom center of the screen.
-        self.image_rect.midbottom = self.screen_rect.midbottom
+        self.rect.midbottom = self.screen_rect.midbottom
 
         # Store a decimal value for the ship's horizontal position
-        self.x = float(self.image_rect.x)
+        self.x = float(self.rect.x)
 
         # Movement flags
         self.moving_right = False
         self.moving_left = False
 
     def update(self):
-        """Update the ships position based on the movement flags."""
-        # Update the ship's x value, not the image_rect
-        if self.moving_right and self.image_rect.right < self.screen_rect.right:
+        """Update the ships position based on the movement flags.
+        It means moving the ship left or right."""
+        # Update the ship's x value, not the rect
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
         # if we used "elif" for motion to the left, the right arrow key would always have priority
         # self.screen_rect.left is also equal to the 0th horizonlat pixel:
-        if self.moving_left and self.image_rect.left > self.screen_rect.left:
+        if self.moving_left and self.rect.left > self.screen_rect.left:
             self.x -= self.settings.ship_speed
 
-        # Update image_rect object from self.x
-        self.image_rect.x = self.x
+        # # Update the rect object's position
+        self.rect.x = self.x
 
     def blitme(self):
         """Draw the ship at its current location."""
-        self.screen.blit(self.image, self.image_rect)
+        self.screen.blit(self.image, self.rect)

@@ -30,12 +30,15 @@ class AlienInvasion:
         # initialize the ship object
         # the self argument here refers to the current instance of AlienInvasion
         self.ship = Ship(self)
+
+        # create a group (list) of bullets valiable
         self.bullets = pygame.sprite.Group()
 
     # helper methods
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
+            # initialize a bullet object
             new_bullet = Bullet(self)
             # add() is a method written specifically for Pygame groups
             self.bullets.add(new_bullet)
@@ -87,6 +90,8 @@ class AlienInvasion:
 
         # draw the ship on the screen
         self.ship.blitme()
+
+        # draw the bullets on the screen
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
