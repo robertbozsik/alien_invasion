@@ -9,8 +9,9 @@ class Alien(Sprite):
     def __init__(self, ai_game):
         """Initialize the alien and set its starting position."""
 
-        # inheritance and screen attribute set
+        # inherit from Sprite
         super().__init__()
+        # set the screen attribute
         self.screen = ai_game.screen
 
         # Load the alien image and set its rect attribute
